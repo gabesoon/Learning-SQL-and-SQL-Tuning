@@ -1,0 +1,30 @@
+PART 1「입문」 SQL 첫발 내딛기
+
+*SQL의 종류 (총 5가지)
+	1. Query (데이터를 검색하는 언어)
+	-> select 문의 6가지 절(이 있음). 그것을 Query 에서 배움
+	
+	2. DML 문 (Data Manipulation Language , 데이터 조작 언어)
+	1) 'insert' = 데이터 입력 언어
+	2) 'update' = 데이터 수정 언어
+	3) 'delete' = 데이터 삭제 언어
+	4) 'merge' = 데이터 입력, 수정, 삭제를 한번에 수행하는 명령어
+	
+	3. DDL 문 (Data Definition Language, 데이터 정의어)
+	1) 'create' = 생성
+	2) 'alter' = 수정
+	3) 'drop' = 삭제
+	4) 'truncate' = 삭제
+	5) 'rename' = 이름변경
+	
+	4. DCL 문 (Data Control Language, )
+	1) 'grant' = 데이터를 접근 할 수 있는 권한을 부여하는 것
+	2) 'revoke' = 데이터를 접근 할 수 있는 권한을 취소하는 것 (뺏는것)
+	
+	5. TCL 문 (Transaction Control Language, )
+	1) 'commit' = 현재의 데이터의 상태를 DB에 '영구히' 저장하겠다. (는 뜻)
+	2) 'rollback' = 지금까지 했던 작업을 다 '취소' 하겠다. (는 뜻)
+	3) 'savepoint' = 특정시점까지 'rollback' 하는 기능
+
+* '핵심'은 내가 보고 싶은 데이터를 정확하게 검색해서 보는 '기술'을 배우는 것. = SQL
+
