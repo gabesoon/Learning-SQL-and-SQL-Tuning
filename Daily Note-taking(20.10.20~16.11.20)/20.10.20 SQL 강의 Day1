@@ -1,0 +1,140 @@
+PART 1「입문」 SQL 첫발 내딛기
+
+오라클 = Database software 
+(오라클은 DB분야 세계 점유 80%의 대기업명 이기도함. DB SW를 만든 회사이자 그 SW의 이름이 오라클)
+DB = data를 저장하고 관리하는 저장소를 말함
+
+오늘부터 한달 간 배울 것 = SQL
+(SQL커리큘럼 : 
+http://cafe.daum.net/oracleoracle/SfFj/3?svc=cafeapi
+
+출처: <http://cafe.daum.net/_c21_/bbs_read?grpid=zchT&fldid=SfFj&contentval=00003zzzzzzzzzzzzzzzzzzzzzzzzz&datanum=3&page=1&prev_page=0&firstbbsdepth=&lastbbsdepth=zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz&listnum=20> )
+
+*SQL = Structure Query Language (구조적 지리 언어)
+       = 데이터를 검색하고 조작하는 언어
+SQL을 왜 배워야 하는가?
+	1) 데이터를 검색하고 다룰려면 무조건 알아야함.
+
+If 진로가 Data Analyst / Data developer, 많은 업무에서 SQL이 많이 사용됨. So 반드시 SQL을 배워야함.
+
+*SQL의 종류 (총 5가지)
+	1. Query (데이터를 검색하는 언어)
+	-> select 문의 6가지 절(이 있음). 그것을 Query 에서 배움
+	
+	2. DML 문 (Data Manipulation Language , 데이터 조작 언어)
+	1) 'insert' = 데이터 입력 언어
+	2) 'update' = 데이터 수정 언어
+	3) 'delete' = 데이터 삭제 언어
+	4) 'merge' = 데이터 입력, 수정, 삭제를 한번에 수행하는 명령어
+	
+	3. DDL 문 (Data Definition Language, 데이터 정의어)
+	1) 'create' = 생성
+	2) 'alter' = 수정
+	3) 'drop' = 삭제
+	4) 'truncate' = 삭제
+	5) 'rename' = 이름변경
+	
+	4. DCL 문 (Data Control Language, )
+	1) 'grant' = 데이터를 접근 할 수 있는 권한을 부여하는 것
+	2) 'revoke' = 데이터를 접근 할 수 있는 권한을 취소하는 것 (뺏는것)
+	
+	5. TCL 문 (Transaction Control Language, )
+	1) 'commit' = 현재의 데이터의 상태를 DB에 '영구히' 저장하겠다. (는 뜻)
+	2) 'rollback' = 지금까지 했던 작업을 다 '취소' 하겠다. (는 뜻)
+	3) 'savepoint' = 특정시점까지 'rollback' 하는 기능
+
+'핵심'은 내가 보고 싶은 데이터를 정확하게 검색해서 보는 '기술'을 배우는 것. = SQL
+
+-SQL만 다루는 롤의 직무만 있는 경우도 있음.
+
+
+우리가 쓸 버전은 Oracle database 19c ( c = cloud)
+Oracl database = 데이터 저장소
+
+19c 에는 인공지능의 한부분인 머신러닝* 기능이 내장되어 있음.
+머신러닝 = 컴퓨터가 스스로 학습하여 공부하는 기능. (일종의 A.I)
+
+DS에서 머신러닝을 응용하는 방법?
+예시) 위스콘신 대학에서 유방암 데이터 (정상 / 악성) 을 활용해 유방함 유무를 체크하는 식으로 머신러닝 학습을 활용함.
+
+다양한 알고리즘 문제를 SQL로 풀 수 있음. (11기 게시판에 보면 예시 많음)
+
+<Oracle 설치방법>
+
+기본적으로는 스샷을 참조
+특이사항
+Oracle 2가 아닌 oracle3 폴더를 새로 만들고 그 폴더에 설치해야함. 
+
+'컨테이너 데이터베이스로 생성' 을 체크해제
+같은페이지 비번 : oracle_4U
+
+
+설치후! 본격 수업
+
+
+	1. 오라클 열기
+	1) 도스창을 연다 (윈도우+r -> cmd + enter)
+	2) 명령어 -> sqlplus "/as sysdba" 하면 오라클이 열림!
+
+	3. show user 입력 -> USER은 "SYS"입니다 라고 뜸.
+	 'SYS'는 오라클의 '최고 권한자' 를 말함.
+	
+본격 수업 시작!
+
+001 테이블에서 특정 열(COLUMN) 선택하기
+
+	1. 데이터 만들기
+	1) 카페로 간다.
+	2) 오라클 실습 데이터 스크립트 게시글로 들어간다.
+	3) 명령어들을 복사한다.
+	4) 도스창으로 간다.
+	5) 커서에서 우클릭! (자동입력됨) -> 짜잔~!
+	6) 이작업은 오늘만 하면 되는 것
+	
+	
+	2. 데이터 검색하기
+	명령어 : select ename, sal from emp; 라고 입력 + 엔터
+	명령어 해석
+	'select' = 검색 / 조회 해라
+	'ename' = 이름 하고
+	'sal' = 월급을 
+	'from' =무엇으로 부터?
+	'emp' = emp라는 table 로 부터
+	' ; ' (세미 콜론) = 세미콜론 앞에 있는 (SQL) 문장 '실행해라' 라는 뜻(명령어)
+	
+	So, emp라는 table로부터 이름과 월급을 검색해라 라는 말!
+	
+	
+	3. emp table 의 컬럼들 (수업위해 필요한 정보)
+	
+	empno : 사원번호
+	ename : 사원이름
+	sal : 월급
+	job : 직업
+	comm : 커미션
+	mgr : 관리자 번호
+	hiredate : 입사일
+	deptno : 부서번호
+	
+	
+	오늘의 마무리!
+	문제 1.  이름과 월급과 직업을 출력하시오
+	
+	나의 생각 select ename, sal, job from emp; (맞음)
+	
+	
+	
+	문제 2. 이름과 입사일과 부서번호를 출력하시오
+	나의 생각 : select ename, hiredate, deptno from emp; (맞음)
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
