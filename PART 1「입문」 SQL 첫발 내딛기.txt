@@ -1,4 +1,4 @@
-PART 1「입문」 SQL 첫발 내딛기
+000 PART 1「입문」 SQL 첫발 내딛기
 
 오라클 = Database software 
 (오라클은 DB분야 세계 점유 80%의 대기업명 이기도함. DB SW를 만든 회사이자 그 SW의 이름이 오라클)
