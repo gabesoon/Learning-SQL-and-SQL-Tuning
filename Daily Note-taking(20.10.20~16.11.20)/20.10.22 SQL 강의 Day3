@@ -1,0 +1,699 @@
+013 비교 연산자 배우기 4(IS NULL)
+
+NULL 값을 조회할 때 사용하는 연산자가 is null 이다.
+null 값이란, data가 없는 상태 혹은 알 수 없는 값(unkown-> oracle 메뉴얼에서만 표현 -> 의미가 더 명확화됨) 이라는 의미.
+
+
+문제 40. 이름과 월급과 커미션을 출력하세요 (1).  커미션이 null 인 사원들의 이름과 커미션을 출력하시오.(2)
+
+(1) 내생각 : 맞음
+select ename, sal, comm
+	from emp;
+
+결과값에서 null 로 나오는 사람들이 커미션이 없는(받지않는) 사람들.
+
+(2) 내 생각 : 맞음
+select ename, comm
+	from emp
+	where comm is null;
+	
+
+	
+
+만약, 수식을 is null 이 아닌 where comm = null 이라고 하면 값이 나오지 않음.
+왜냐하면 null은  알 수 없는 값이므로, 비교 연산자인 = 로는 조회할 수 없다.
+null 을 조회 하려면 '기타 비교연산자'인 is null 을 써야 한다.
+
+*해석하면 결국 comm is null 이나 comm = null 이나 머리속으론 같은 의미로 생각되어서 헷갈려 할수 있다!
+*null 은 비교연산자와 쓸수없다! 그래서 '기타 비교연산자' 로 사용한다!
+
+
+
+
+
+문제 41. 커미션이 'null 이 아닌' 사원들의 이름과 커미션을 출력하시오.
+
+내 생각 
+select ename, comm
+	from emp
+	where comm is not null;
+	
+
+
+
+문제 42. mgr(관리자의 사원번호) 이 null 인 사원의 이름과 직업을 출력하시오
+
+내 생각
+select ename
+	from emp
+	where mgr is null;
+	
+
+
+
+
+문제 43. 사원번호, 이름, 관리자 번호를 출력하시오. 
+
+select empno, ename, mgr
+    from emp;
+
+결과를 보면..
+사장(PRESIDENT) 은 관리자 번호(mgr)가 없다. (총 책임자 니까)
+
+
+
+
+014 비교 연산자 배우기 5(IN)
+
+where 절의 검색 조건에서 여러개의 행을 비교할때는 in 을 사용해야 합니다.
+i.e) 사원번호가 7788, 7902 인 사원들의 사원번호와 이름을 조회하시오.
+
+select empno, ename
+	from emp
+	where empno in (7788, 7902)
+	
+
+
+= (equal) 연산자는 하나의 값만 비교할 수 있다. 여러개의 값을 비교할 때는 in 을 사용해야 합니다.
+
+
+
+
+문제 44. 직업이 SALESMAN, ANALYST 인 사원들의 이름과 직업을 출력하시오.
+
+내 생각 : 맞음
+select ename, job
+	from emp
+	where job in ('SALESMAN' , 'ANALYST');
+	
+	
+	
+여러개를 비교하는 것이니까 'in'을 써야 하고, 괄호 로 묶어 줘야 한다!
+ename 은 검은색인데, job 은 파란색인 이유? -> job 이 오라클의 명령어중 하나여서 그럼.
+보통 회사에서는 job이라고 안씀.
+
+문제 45. 직업이 SALESMAN, ANALYST 가 아닌 사원들의 이름과 직업을 출력하세요.
+
+내 생각 : 맞음
+
+select ename, job
+	from emp
+	where job not in ('SALESMAN' , 'ANALYST');
+
+
+
+
+select ename, job
+	from emp
+	where not job in ('SALESMAN' , 'ANALYST');
+	
+라고 써도 값은 나오는데, 이건 오라클이 문법을 자동수정 해준 것. (정확하게 배우는 것이 중요!)
+
+
+조금 더 현업에 가까운 데이터를 만들기 위해 우리반 만의 데이터를 생성해서 실습할 예정
+
+i.e) 
+
+통신사 : sk, lg, kt
+
+insert into emp12
+values('김승순',33,'남','국제통상학과','skt','nostelgia18@gmail.com','서울시 도봉구 쌍문동' );
+
+로 해서 카페에 댓글 달기 (완료)
+
+
+<점심시간 문제! >
+문제 46. 직업이 SALESMAN 이 아닌 사원들의 이름과 월급과 직업을 출력하시오.
+
+내 생각 
+select ename, job, sal
+	from emp
+	where job != 'SALESMAN';
+
+
+
+
+
+문제 47. 위의 결과를 다시 출력하는데 월급이 높은 사원부터 출력하시오.
+
+내 생각 : 맞음
+
+select ename, sal, job
+    from emp
+    where job != 'SALESMAN'
+    order by sal desc;
+
+
+
+
+수업을 위해 emp12 테이블을 만든 scott 유저 창에서 emp와 dept 테이블을 생성하기!
+카페 게시글 2번 복사 후 오라클 scott 창에 붙여 넣기
+
+
+문제 48. 우리반 테이블에서 이름과 나이를 출력하는데 나이가 높은 학생부터 출력하시오.
+
+내 생각 : 맞음
+select ename, age
+	from emp12
+	order by age desc;
+
+
+
+	
+문제 49. 이름과 나이와 주소를 출력하는데, 30살 이상인 학생들만 출력하시오.
+
+내 생각 : 맞음
+select ename, age
+	from emp12
+	where age >=30;
+	
+
+	
+	
+문제 50. 성씨가 '김씨' 인 학생들의 이름과 통신사를 출력하시오.
+
+내 생각 : 맞음
+select ename, telecom
+	from emp12
+	where ename like '김%';
+	
+
+
+
+
+문제 51. 전공에 통계를 포함하고 있는 학생들의 이름과  전공을 출력하시오.
+
+
+정답
+select ename, major
+	from emp12
+	where major like '%통계%';
+	
+
+
+like 연산자를 사용할 때 특정 단어를 포함하고 있는 데이터를 검색하려면 '%단어%' (양쪽에 와일드카드) 라고 하면 됩니다.
+
+문제 52. 우리반에 gmail 사용하는 학생들의 이름과 메일을 출력하시오.
+
+내 생각 (반만 정답)
+select ename, email
+	from emp12
+	where email like '%@gmail%';
+	
+	? @는 안썼어도 되긴함.
+    
+select ename, email
+    from emp12
+    where email like '%gmail%';
+
+
+
+문제 53. 우리반에 나이가 27에서 34사이인 학생들의 이름과 나이를 출력하시오.
+
+내 생각 : 맞음
+select ename, age
+	from emp12
+	where age between 27 and 34;
+	
+	
+
+	
+문제 54. 우리반에서 나이가 27에서 34 사이가 아닌 학생들의 이름과 나이를 출력하시오.
+
+내 생각 : 
+select ename, age
+	from emp12
+	where age not between 27 and 34;
+	
+
+	
+
+문제 55. 주소가 경기도인 학생들의 이름과 나이와 주소를 출력하시오.
+
+내 생각 :
+
+select ename, age, address
+	from emp12
+	where address like '%경기도%';
+	
+
+
+
+
+문제 56. 통신사가 sk, lg 인 학생들의 이름과 통신사를 출력하시오.
+
+내 생각 : 맞음
+
+select ename, telecom
+	from emp12
+	where telecom in ('sk','lg');
+	
+
+
+
+
+근데 우리반 데이터 테이블에는 오기입으로 인해 Sk, skt 등도 있어서 실무에선 올바르게 짠 코딩이 아닐 수도있음!
+
+
+
+
+문제 57. 서울에서 사는 학생들의 이름과 나이와 전공을 출력하는데 나이가 높은학생부터 출력하시오.
+
+
+내 생각 : 맞음
+select ename, age, major
+	from emp12
+	where address like '%서울%'
+	order by age desc;
+	
+
+	
+
+문제 58. 이메일이 gmail이 아닌 학생들의 이름과 이메일을 출력하시오.
+
+내 생각 : 맞음
+
+select ename, email
+	from emp12
+	where email not like '%gmail%';
+	
+
+
+
+문제 59. 아래와 같이 결과가 출력되도록 하시오.
+
+김** 학생의 나이는 44세 입니다. <-git hub 업로드 용이라 암호화함. (실제론 반 구성원 이름)
+권** 학생의 나이는 36세 입니다.
+          .
+          .
+          .
+          .
+          
+내 생각 : 맞음 
+
+select ename || ' 학생의 나이는' ||age|| '세 입니다.'
+	from emp12
+	order by age desc;
+	
+
+
+연결연산자 코딩은 의외로 어렵다. 배울때는 쉽다고 생각했는데 오랜만에 나와서 응용하려니 바로 생각이 나지 않아서 노트를 찾아 봤다. 
+(찾아 보고도 오래걸렸다..) -> 역시 복습만이 살길!
+
+
+015 논리 연산자 배우기(AND, OR, NOT)
+
+
+연산자의 종류는 3가지가 있음.
+1) 산술 연산자 -> *, /, +, - (사칙연산) 
+
+2) 비교 연산자 -> >, <, >=, <=, =, !=, <>, ^= 
+기타 비교 연산자 -> between and , like, is null, in
+
+3) 논리 연산자 -> and , or, not
+
+e.g) 직업이 SALESMAN 이고 월급이 1200 이상인 사원들의 이름과 월급과 직업을 출력하시오.
+
+ 정답 
+
+select ename, sal, job
+    from emp
+    where job = 'SALESMAN' and sal>=1200;
+
+
+
+'and' 양 옆의 조건이 모두 true 이기 때문에 값이 나오는 것. 
+-> true and true = true
+
+
+
+'and' 양옆의 조건중 하나가 false 이면 나머지 하나가 true 여도 false 가 된다.
+
+false and true = false 여서 결과가 출력이 안됨.
+
+What if, 두번째 예시에서 and가 아닌 or 라면?
+
+false or true = true 이기에 결과가 출력됨. (결과물이 나옴)
+
+select ename, sal, job
+    from emp
+    where job = 'SALESMAN' or sal>=1200;
+
+
+SALESMAN 은 해당되지 않아도 sal 이 1200 이상인 조건들이 모두 나온 것!
+
+그러므로 'or' 명령어를 쓸때는 매우 주의 해야 함! 조건 하나가 false 여도 값은 나오기 때문에!
+
+
+
+문제 60. 직업이 SALESMAN 이거나 ANALYST 인  사원들의 이름과 월급과 직업을 출력하시오.
+
+내 생각 
+select ename, sal, job
+    from emp
+    where job = 'SALESMAN' or 'ANALYST'; 
+
+이라고 했는데 오답!
+
+select ename, sal, job
+    from emp
+    where job = 'SALESMAN' or job = 'ANALYST';
+    라고 해야 나옴.
+    where 절에 조건을 쓸때는 같은 걸럼이라 하더라도, 조건2부터는 검색할 조건이 있는
+    컬럼명을 명시해줘야 한다!
+
+
+혹은 
+select ename, sal, job
+	from emp
+	where job in 'SALESMAN' or job = 'ANALYST';
+	
+
+
+문제 61. 성씨가 김씨, 이씨가 아닌 학생 들의 이름을 출력하시오.
+
+어렵다!!!
+
+select ename
+    from emp12
+    where ename not like '%김%' and ename not like '%이%';
+
+
+
+
+
+연결 해주는 거니까 명령어 뒤에 (and, or ) 두번째 조건에 또다시  명령어를 입력해주는게 포인트!
+
+ 
+문제 62. 이메일이 gmail 과 naver 이 아닌 학생들의 이름과 이메일을 출력하시오.
+
+내 생각 : 맞음
+
+select ename, email
+	from emp12
+	where email not like '%gmail%' and email not like '%naver%';
+	
+
+
+	
+	
+
+
+PART 2「초급」 SQL 기초 다지기
+
+
+016 대소문자 변환 함수 배우기(UPPER, LOWER, INITCAP)
+
+함수 (function) 이란, 어떤 특정 기능을 구현해 놓은 코드의 집합.
+
+특정 입력값을 '함수'에 넣으면, 어떤 '출력값' 을 보여줌. (무언가가 항상 나옴! 안나오지 않아!)
+
+함수를 사용하는 이유?
+함수를 이용하면 좀 더 복잡한 데이터 검색을 할 수 있기 때문.
+
+e.g) 영화 겨울 왕국에는 elsa 가 많이 나올까 anna 가 많이 나올까? 같은 것을 할 수 있음.
+
+e.g) 우리반 학생들이 제일 많이 쓰는 통신사가 어디일까?
+
+함수의 종류는 2가지
+
+1) 단일행 함수 : 하나의 행을 입력받아 하나의 행을 반환하는 함수
+- 문자 : upper, lower, initcap // 그외 SUBSTR, LENGTH, CONCAT, INSTR, TRIM, LAPD, RPAD 등등
+
+upper = 대문자로 출력하는 함수
+lower = 소문자로 출력하는 함수
+initcap = '첫글자만 대문자' 나머지는 다 소문자로 출력하는 함수
+
+추후 배울 유형들
+- 숫자 : 
+- 날짜 :
+- 변환 :
+- 일반 :
+
+2) 복수행 함수 : 여러개의 행을 입력 받아 하나의 행을 반환하는 함수.
+- max
+- min
+- avg
+- sum
+- count
+- var
+- stddev
+
+단일행 함수 중 문자 함수
+
+e.g)
+
+select upper(ename), lower(ename),initcap(ename)
+    from emp;
+
+해석: emp테이블에서 이름을 3번 출력하는데 첫번째는 대문자로 출력하고, 두번째는 소문자로 이름을 출력하고, 
+    세번째는 첫글자만 대문자 나머지는 소문자로 하여 출력하라!
+
+이 함수들은 특정 조건을 '찾는 것'이 아니라, 데이터를 내가 '원하는 조건으로 적용' 시켜 주는 함수!
+설령 데이터가 대/소문자가 섞여 있어도 내가 원하는 방식으로 정제할 수가 있는 것. 
+
+
+문제 63. 우리반 테이블에서 통신사가 sk 와 관련된 통신사이면 그 학생의 이름과 통신사를 출력하시오.
+정확하게 데이터가 출력되게 끔 SQL 을 작성하시오! (나는 못풀었음)
+
+
+정답 
+select ename, upper(telecom)
+	form emp12
+	where upper(telecom) like '%SK%';
+	
+	
+
+
+where upper(telecom) -> 요부분이 똑똑하게 SQL을 잘 만든 것.
+telecom 데이터를 전부 대문자로 바꾸라는 명령어
+그 후 like 에 편하게(데이터를 대문자로 전부 바꿨으니까) 대문자만 입력해서 검색하라고 명령 
+
+select 선택하라 , ename 이름과, upper(telecom) 대문자로 된 통신사를
+from emp12 -> emp 12 라는 테이블에서
+where 선택할 곳은 , upper(telecom) 대문자로 변환한 통신사 자료이고, like '%SK%' -> SK로 표기 되는 모든 자료들을 출력하라.
+
+lower 개념을 적용해서 
+
+select ename, lower(telecom) as telecom
+    from emp12
+    where lower(telecom) like '%sk%';
+    
+로 풀 수도 있음!
+
+017 문자에서 특정 철자 추출하기(SUBSTR)
+
+문법 : 
+substr(출력할 컬럼, 문자출력 시작할 지점, 문자출력할 수)
+
+e.g) 
+select ename, substr(ename, 1,1) <- ename의 철자를 출력하는데 첫번째 글자기준으로 우측으로 한글자만 출력하라!
+from emp12;
+
+
+숫자로 보는 글자의 자리수 기준
+    김     승      순
+    1      2       3 
+   -3     -2      -1 
+
+둘다 가능!
+
+substr(ename, 시작점이될 자리의 위치, 몇번째까지 표시할것인지)
+
+이름이 3글자 김.승.순 이면 김 은 1번째 혹은 -3, 승 은 2번째, 혹은 -2, 순 은 3번째 자리를 의미
+
+substr(ename, 2,2) 면 이름 데이터에서 2번째 글자부터 2개를 읽어라 라는 의미!
+-> 승 (2번째 글자) 부터 2글자 인 '승순'으로 읽게 되는 것.
+
+substr(ename, -3,2) 면 이름 이터에서 뒤에서 3번째인 글자 (김) 부터 2글자를 읽으라는의미 
+-> 김승 이라고 나옴.
+
+
+e.g)
+select ename, substr(ename,1,1)
+	from emp12;
+	
+
+
+e.g)
+성씨가 '이'씨인 학생들의 이름을 출력하시오. like 쓰지 않고, in 과 substr 만을 써서 나타내시오.
+
+내 생각
+select ename, substr(ename,1,1)
+    from emp12
+    where substr(ename,1,1) in '이';
+
+조건이 하나여서 사실 in 대신 =을 써도 되긴 하다.
+
+
+select ename, substr(ename,1,1) -> 이름과 이름의 첫글자 데이터를 선택하고
+    from emp12 
+    where substr(ename,1,1) in '이'; -> where 절이 조건을 지정하는 절! 
+   어떤 데이터를 추출할 것인지 조건을 부여하는 것이므로 substr 을 쓴다. 그리고 그중에 '이'라는 글자를 가진 데이터   
+    만 골라내는 것
+
+where 절에 검색조건을 줘야 원하는 데이터를 볼 수 있는 것.
+select 절은 데이터를 선택할 뿐. 필터링 하진 않아!
+
+
+
+
+
+문제 64. 성씨가 김, 이, 유씨인 학생들의 이름과 나이를 출력하는데 like 를 쓰지 말고 in 과 substr 을 써서 출력하시오.
+
+
+내 생각 : 맞음
+
+select ename, age
+	from emp12
+	where substr(ename,1,1) in ('김','이','유');
+	
+
+
+
+018 문자열의 길이를 출력하기(LENGTH)
+
+철자의 길이를 출력하는 함수
+select ename, length(ename) 
+	from emp;
+
+-> emp에서 ename라는 컬럼에서 출력되는 데이터 각 값의 길이가 몇자인지 출력하라는 뜻
+
+
+
+
+
+문제 65. 우리반 테이블에서 이메일과 이메일 철자의 길이를 출력하는데, 이메일 철자의 길이가 긴 것부터 출력되도록 하시오.
+
+내 생각 : 맞음
+
+select ename, email, length(email)
+    from emp12
+    order by length(email) desc;
+
+
+
+
+응용 해보고 싶어진 것
+Q. 이메일 글자순으로 나열하고, 이름을 가나다 순으로 나열하는 법은?
+
+select ename, email, length(email)
+	from emp12
+	order by length(email) desc, ename desc;
+	
+
+
+다른 조건 명령어들은 and 나 not 등을 붙여서 처음엔 
+order by length(email) desc and ename desc; 요렇게 했는데 오류!
+
+order by 에서 여러조건을 입력할때는 전치사 없이 조건 추가할때 콤마로 구분만 하면 됨!
+(전에 실습하며 해본 적이 있는데 기억을 못했던 듯. 역시 복습이 중요!) 
+
+
+문제 66. EMP 테이블에서 ename 을 출력하고 그 옆에 ename 의 첫번째 철자를 출력하시오.
+
+내 생각 : 맞음
+select ename, substr(ename,1,1)
+    from emp;
+
+
+
+문제 67. 위의 결과를 다시 출력하는데 이름의 첫번째 철자로 출력되는 부분은 소문자로 출력하시오.
+
+내 생각 : 맞음
+
+select ename, lower(substr(ename,1,1))
+    from emp;
+
+or
+
+선생님이 알려주신 다른 답
+select ename, substr(lower(ename),1,1)
+    from emp;
+
+이렇게 해도 됨.
+
+
+도출하려는 값중 대/소 문자 등으로 변경하고 싶은 것은 맨 앞에 와야 하는 구나! 
+
+
+문제 68. (오늘의 마지막 문제) 답글로 검사 받으세요~!
+아래의 결과를 initcap 쓰지 말고, upper, lower, substr, || (연결연산자) 사용해서 출력하시오!
+
+select initcap(ename)
+	from emp;
+
+결과값
+King
+Blake
+Clark
+Jones
+Martin
+Allen
+Turner
+James
+Ward
+Ford
+Smith
+Scott
+Adams
+Miller
+	
+
+
+
+내 생각
+
+select substr(upper(ename),1,1)||substr(lower(ename),2,5) as "INITCAP(ENAME)"
+    from emp; 
+
+이것도 맞긴함.  근데 글자수를 전부 다 알고 있어서 맞추서 5라고 카운팅한것!
+
+다른 사람 답변 보니!
+select substr(upper(ename),1,1)||substr(lower(ename),2,length(ename)-1)
+    from emp;
+
+라고 해서 length 함수도 쓰면서 맨 뒷자리는 몇글자가 되든 -1인 것을 응용함! (똑똑해!!!)
+
+가장 완벽한 답은 이거 같음!
+
+select upper(substr(ename,1,1))||lower(substr(ename,2))
+from emp;
+
+-> 선택해라 대문자로 이름의 첫번째 글자 기준으로 1글자 || (연결연산) 소문자로 이름의 2번째 글자부터 전부!
+emp 테이블로 부터
+
+substr 을 쓸때 데이터를 고를 컬럼을 선택하고 콤마/숫자/괄호(끝날 순번 지정하지 않음) 하면 해당 숫자부터 끝까지 별도의 지정 없이 다 선택이 되는 것이구나! 
+꼭 substr(컬럼, 숫자,숫자) 이런 식으로 입력할 필요 없구나!
+
+
+응용문제 만들어 보자.
+Q. 68번의 결과 + job 을 출력하는데 initcap 쓰지 말고, upper, lower, substr, || (연결연산자) 사용해서 출력하시오!
+
+select initcap(ename), initcap(job)
+    from emp;
+
+결과값
+King	President
+Blake	Manager
+Clark	Manager
+Jones	Manager
+Martin	Salesman
+Allen	Salesman
+Turner	Salesman
+James	Clerk
+Ward	Salesman
+Ford	Analyst
+Smith	Clerk
+Scott	Analyst
+Adams	Clerk
+Miller	Clerk
+
+
+위 결과 처럼 만들기
+
+select upper(substr(ename,1,1))||lower(substr(ename,2))as "INITCAP ENAME",
+upper(substr(job,1,1))||lower(substr(job,2)) as "INITCAP JOB"
+    from emp;
+
+
