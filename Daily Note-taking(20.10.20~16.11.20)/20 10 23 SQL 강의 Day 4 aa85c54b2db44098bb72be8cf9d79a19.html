@@ -1,681 +1,277 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>20.10.23 SQL 강의	Day	4
-</title><style>
-/* webkit printing magic: print all background colors */
-html {
-	-webkit-print-color-adjust: exact;
-}
-* {
-	box-sizing: border-box;
-	-webkit-print-color-adjust: exact;
-}
-
-html,
-body {
-	margin: 0;
-	padding: 0;
-}
-@media only screen {
-	body {
-		margin: 2em auto;
-		max-width: 900px;
-		color: rgb(55, 53, 47);
-	}
-}
-
-body {
-	line-height: 1.5;
-	white-space: pre-wrap;
-}
-
-a,
-a.visited {
-	color: inherit;
-	text-decoration: underline;
-}
-
-.pdf-relative-link-path {
-	font-size: 80%;
-	color: #444;
-}
-
-h1,
-h2,
-h3 {
-	letter-spacing: -0.01em;
-	line-height: 1.2;
-	font-weight: 600;
-	margin-bottom: 0;
-}
-
-.page-title {
-	font-size: 2.5rem;
-	font-weight: 700;
-	margin-top: 0;
-	margin-bottom: 0.75em;
-}
-
-h1 {
-	font-size: 1.875rem;
-	margin-top: 1.875rem;
-}
-
-h2 {
-	font-size: 1.5rem;
-	margin-top: 1.5rem;
-}
-
-h3 {
-	font-size: 1.25rem;
-	margin-top: 1.25rem;
-}
-
-.source {
-	border: 1px solid #ddd;
-	border-radius: 3px;
-	padding: 1.5em;
-	word-break: break-all;
-}
-
-.callout {
-	border-radius: 3px;
-	padding: 1rem;
-}
-
-figure {
-	margin: 1.25em 0;
-	page-break-inside: avoid;
-}
-
-figcaption {
-	opacity: 0.5;
-	font-size: 85%;
-	margin-top: 0.5em;
-}
-
-mark {
-	background-color: transparent;
-}
-
-.indented {
-	padding-left: 1.5em;
-}
-
-hr {
-	background: transparent;
-	display: block;
-	width: 100%;
-	height: 1px;
-	visibility: visible;
-	border: none;
-	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-}
-
-img {
-	max-width: 100%;
-}
-
-@media only print {
-	img {
-		max-height: 100vh;
-		object-fit: contain;
-	}
-}
-
-@page {
-	margin: 1in;
-}
-
-.collection-content {
-	font-size: 0.875rem;
-}
-
-.column-list {
-	display: flex;
-	justify-content: space-between;
-}
-
-.column {
-	padding: 0 1em;
-}
-
-.column:first-child {
-	padding-left: 0;
-}
-
-.column:last-child {
-	padding-right: 0;
-}
-
-.table_of_contents-item {
-	display: block;
-	font-size: 0.875rem;
-	line-height: 1.3;
-	padding: 0.125rem;
-}
-
-.table_of_contents-indent-1 {
-	margin-left: 1.5rem;
-}
-
-.table_of_contents-indent-2 {
-	margin-left: 3rem;
-}
-
-.table_of_contents-indent-3 {
-	margin-left: 4.5rem;
-}
-
-.table_of_contents-link {
-	text-decoration: none;
-	opacity: 0.7;
-	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-}
-
-table,
-th,
-td {
-	border: 1px solid rgba(55, 53, 47, 0.09);
-	border-collapse: collapse;
-}
-
-table {
-	border-left: none;
-	border-right: none;
-}
-
-th,
-td {
-	font-weight: normal;
-	padding: 0.25em 0.5em;
-	line-height: 1.5;
-	min-height: 1.5em;
-	text-align: left;
-}
-
-th {
-	color: rgba(55, 53, 47, 0.6);
-}
-
-ol,
-ul {
-	margin: 0;
-	margin-block-start: 0.6em;
-	margin-block-end: 0.6em;
-}
-
-li > ol:first-child,
-li > ul:first-child {
-	margin-block-start: 0.6em;
-}
-
-ul > li {
-	list-style: disc;
-}
-
-ul.to-do-list {
-	text-indent: -1.7em;
-}
-
-ul.to-do-list > li {
-	list-style: none;
-}
-
-.to-do-children-checked {
-	text-decoration: line-through;
-	opacity: 0.375;
-}
-
-ul.toggle > li {
-	list-style: none;
-}
-
-ul {
-	padding-inline-start: 1.7em;
-}
-
-ul > li {
-	padding-left: 0.1em;
-}
-
-ol {
-	padding-inline-start: 1.6em;
-}
-
-ol > li {
-	padding-left: 0.2em;
-}
-
-.mono ol {
-	padding-inline-start: 2em;
-}
-
-.mono ol > li {
-	text-indent: -0.4em;
-}
-
-.toggle {
-	padding-inline-start: 0em;
-	list-style-type: none;
-}
-
-/* Indent toggle children */
-.toggle > li > details {
-	padding-left: 1.7em;
-}
-
-.toggle > li > details > summary {
-	margin-left: -1.1em;
-}
-
-.selected-value {
-	display: inline-block;
-	padding: 0 0.5em;
-	background: rgba(206, 205, 202, 0.5);
-	border-radius: 3px;
-	margin-right: 0.5em;
-	margin-top: 0.3em;
-	margin-bottom: 0.3em;
-	white-space: nowrap;
-}
-
-.collection-title {
-	display: inline-block;
-	margin-right: 1em;
-}
-
-time {
-	opacity: 0.5;
-}
-
-.icon {
-	display: inline-block;
-	max-width: 1.2em;
-	max-height: 1.2em;
-	text-decoration: none;
-	vertical-align: text-bottom;
-	margin-right: 0.5em;
-}
-
-img.icon {
-	border-radius: 3px;
-}
-
-.user-icon {
-	width: 1.5em;
-	height: 1.5em;
-	border-radius: 100%;
-	margin-right: 0.5rem;
-}
-
-.user-icon-inner {
-	font-size: 0.8em;
-}
-
-.text-icon {
-	border: 1px solid #000;
-	text-align: center;
-}
-
-.page-cover-image {
-	display: block;
-	object-fit: cover;
-	width: 100%;
-	height: 30vh;
-}
-
-.page-header-icon {
-	font-size: 3rem;
-	margin-bottom: 1rem;
-}
-
-.page-header-icon-with-cover {
-	margin-top: -0.72em;
-	margin-left: 0.07em;
-}
-
-.page-header-icon img {
-	border-radius: 3px;
-}
-
-.link-to-page {
-	margin: 1em 0;
-	padding: 0;
-	border: none;
-	font-weight: 500;
-}
-
-p > .user {
-	opacity: 0.5;
-}
-
-td > .user,
-td > time {
-	white-space: nowrap;
-}
-
-input[type="checkbox"] {
-	transform: scale(1.5);
-	margin-right: 0.6em;
-	vertical-align: middle;
-}
-
-p {
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-}
-
-.image {
-	border: none;
-	margin: 1.5em 0;
-	padding: 0;
-	border-radius: 0;
-	text-align: center;
-}
-
-.code,
-code {
-	background: rgba(135, 131, 120, 0.15);
-	border-radius: 3px;
-	padding: 0.2em 0.4em;
-	border-radius: 3px;
-	font-size: 85%;
-	tab-size: 2;
-}
-
-code {
-	color: #eb5757;
-}
-
-.code {
-	padding: 1.5em 1em;
-}
-
-.code-wrap {
-	white-space: pre-wrap;
-	word-break: break-all;
-}
-
-.code > code {
-	background: none;
-	padding: 0;
-	font-size: 100%;
-	color: inherit;
-}
-
-blockquote {
-	font-size: 1.25em;
-	margin: 1em 0;
-	padding-left: 1em;
-	border-left: 3px solid rgb(55, 53, 47);
-}
-
-.bookmark {
-	text-decoration: none;
-	max-height: 8em;
-	padding: 0;
-	display: flex;
-	width: 100%;
-	align-items: stretch;
-}
-
-.bookmark-title {
-	font-size: 0.85em;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	height: 1.75em;
-	white-space: nowrap;
-}
-
-.bookmark-text {
-	display: flex;
-	flex-direction: column;
-}
-
-.bookmark-info {
-	flex: 4 1 180px;
-	padding: 12px 14px 14px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-}
-
-.bookmark-image {
-	width: 33%;
-	flex: 1 1 180px;
-	display: block;
-	position: relative;
-	object-fit: cover;
-	border-radius: 1px;
-}
-
-.bookmark-description {
-	color: rgba(55, 53, 47, 0.6);
-	font-size: 0.75em;
-	overflow: hidden;
-	max-height: 4.5em;
-	word-break: break-word;
-}
-
-.bookmark-href {
-	font-size: 0.75em;
-	margin-top: 0.25em;
-}
-
-.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
-.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
-.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
-.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
-.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
-
-.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
-
-.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
-
-.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
-
-.highlight-default {
-}
-.highlight-gray {
-	color: rgb(155,154,151);
-}
-.highlight-brown {
-	color: rgb(100,71,58);
-}
-.highlight-orange {
-	color: rgb(217,115,13);
-}
-.highlight-yellow {
-	color: rgb(223,171,1);
-}
-.highlight-teal {
-	color: rgb(15,123,108);
-}
-.highlight-blue {
-	color: rgb(11,110,153);
-}
-.highlight-purple {
-	color: rgb(105,64,165);
-}
-.highlight-pink {
-	color: rgb(173,26,114);
-}
-.highlight-red {
-	color: rgb(224,62,62);
-}
-.highlight-gray_background {
-	background: rgb(235,236,237);
-}
-.highlight-brown_background {
-	background: rgb(233,229,227);
-}
-.highlight-orange_background {
-	background: rgb(250,235,221);
-}
-.highlight-yellow_background {
-	background: rgb(251,243,219);
-}
-.highlight-teal_background {
-	background: rgb(221,237,234);
-}
-.highlight-blue_background {
-	background: rgb(221,235,241);
-}
-.highlight-purple_background {
-	background: rgb(234,228,242);
-}
-.highlight-pink_background {
-	background: rgb(244,223,235);
-}
-.highlight-red_background {
-	background: rgb(251,228,228);
-}
-.block-color-default {
-	color: inherit;
-	fill: inherit;
-}
-.block-color-gray {
-	color: rgba(55, 53, 47, 0.6);
-	fill: rgba(55, 53, 47, 0.6);
-}
-.block-color-brown {
-	color: rgb(100,71,58);
-	fill: rgb(100,71,58);
-}
-.block-color-orange {
-	color: rgb(217,115,13);
-	fill: rgb(217,115,13);
-}
-.block-color-yellow {
-	color: rgb(223,171,1);
-	fill: rgb(223,171,1);
-}
-.block-color-teal {
-	color: rgb(15,123,108);
-	fill: rgb(15,123,108);
-}
-.block-color-blue {
-	color: rgb(11,110,153);
-	fill: rgb(11,110,153);
-}
-.block-color-purple {
-	color: rgb(105,64,165);
-	fill: rgb(105,64,165);
-}
-.block-color-pink {
-	color: rgb(173,26,114);
-	fill: rgb(173,26,114);
-}
-.block-color-red {
-	color: rgb(224,62,62);
-	fill: rgb(224,62,62);
-}
-.block-color-gray_background {
-	background: rgb(235,236,237);
-}
-.block-color-brown_background {
-	background: rgb(233,229,227);
-}
-.block-color-orange_background {
-	background: rgb(250,235,221);
-}
-.block-color-yellow_background {
-	background: rgb(251,243,219);
-}
-.block-color-teal_background {
-	background: rgb(221,237,234);
-}
-.block-color-blue_background {
-	background: rgb(221,235,241);
-}
-.block-color-purple_background {
-	background: rgb(234,228,242);
-}
-.block-color-pink_background {
-	background: rgb(244,223,235);
-}
-.block-color-red_background {
-	background: rgb(251,228,228);
-}
-.select-value-color-default { background-color: rgba(206,205,202,0.5); }
-.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
-.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
-.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
-.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
-.select-value-color-green { background-color: rgba(0,135,107,0.2); }
-.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
-.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
-.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
-.select-value-color-red { background-color: rgba(255,0,26,0.2); }
-
-.checkbox {
-	display: inline-flex;
-	vertical-align: text-bottom;
-	width: 16;
-	height: 16;
-	background-size: 16px;
-	margin-left: 2px;
-	margin-right: 5px;
-}
-
-.checkbox-on {
-	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-}
-
-.checkbox-off {
-	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-}
-	
-</style></head><body><article id="aa85c54b-2db4-4098-bb72-be8cf9d79a19" class="page sans"><header><h1 class="page-title">20.10.23 SQL 강의	Day	4
-</h1></header><div class="page-body"><p id="6749f5da-5bd6-4e77-880a-d600b05b0365" class="">
-</p><pre id="f8486b1b-9f7c-4494-9579-b6ca58550262" class="code"><code>select upper(substr(ename,1,1)) || lower(substr(ename,2,@))
-from emp;</code></pre><p id="9d7d7b94-88b8-4e31-90f2-6e89b8fb27ee" class="">
-</p><blockquote id="f8c67f95-26b4-4d56-a8b4-0a7304d1a7bd" class="">@자리에 어떤 숫자를 써도 상관없음./ 넉넉하게 써도 되고, 안쓰면 그냥 자동으로 끝까지 읽음.</blockquote><p id="1c381da6-b430-4386-9eb6-64b8f77d67fd" class="">
-</p><p id="e6663b17-784f-4cd1-8294-a5a26e46fc7a" class="">substr( 첫번째 인자값, 두번째 인자값, 세번째 인자값)  / substr 은 &#x27;잘라내는 함수&#x27;</p><p id="7749902f-096e-4afb-919a-5af81a6e9d6b" class="">-&gt; substr(ename, 2, 2) = 김승순 중 승순 만 출력하라!</p><p id="9574232e-e4fd-434b-9028-3ff65d290f7b" class="">김    승    순</p><p id="72f0c548-368d-4733-9688-f4741a1b1bef" class="">1     2     3</p><p id="53369135-48c9-4a32-8f4d-26dee03cebef" class="">-3    -2    -1</p><p id="0d09b688-437a-4646-9d51-8e472805be7f" class="">
-</p><p id="539c9e8a-f3d5-4aa6-86c7-b0810abf92a1" class="">두번째인자값 = 잘라날 시작 자리 수</p><p id="5468554d-24c7-41fe-bdf6-ce8b1a5648dd" class="">
-</p><p id="45ae7f30-0486-416c-8094-6c13e9bfb6b3" class="">세번째인자값 = 시작자리수(두번째인자값)포함해서 잘라낼 철자의 개수</p><p id="5f3660b7-0d36-4af5-a623-4870c5f2c057" class="">substr 작성시 세번째 인자값에 아무것도 적지 않으면,</p><p id="97b10c7a-1e6d-4f23-b60f-518e0ec75e28" class="">
-</p><p id="ed65425c-8357-4eb1-8ef3-58f1de287767" class="">e.g)</p><pre id="80d49ebf-2bb5-45c7-b5d9-cd490d2269bc" class="code"><code>select substr(&#x27;smith&#x27;, 1, 3)
-from dual;</code></pre><p id="c438866c-ea26-4a9e-a99b-ec11283a904d" class="">
-</p><p id="032905d8-d6a7-4ab5-8f98-e2293d3fe42f" class="">
-</p><p id="93d9e33f-7e7b-4c7c-8497-4cbc9db8040b" class="">dual  은 select 절에 있는 함수의 값을 보기 위한 &#x27;가상(dummy)&#x27;의 테이블</p><p id="fdc5ba24-c7d6-4ff8-bb83-b4398767100f" class="">여기서 dual 대신 emp 쓰면 데이터의 건수만큼 똑같은 값이 나옴</p><p id="320bfe1f-cd69-42b2-960e-87168823d110" class="">컬럼명을 쓰면 테이블명 (ename 등) 을 써야 하지만</p><p id="e988d2cf-1b56-4dd0-9c9c-e3c0cadabd9e" class="">특정 &#x27;단어=문자&#x27;를 썼기 때문에 &#x27;dual&#x27; 을 쓴 것.</p><p id="f0fa71c4-6269-4449-8038-bbf2b8b605aa" class="">테이블에서 자료 가져올때는 당연히 emp!</p><p id="22088aca-0c7d-4b74-8ef1-f3f30c704821" class=""><strong>&#x27;dual&#x27; </strong><strong>은 공부</strong> <strong>할때</strong> <strong>아니면</strong> <strong>사실상</strong> <strong>거의</strong> <strong>쓸일</strong> <strong>없으니</strong> <strong>그냥</strong> <strong>알아만</strong> <strong>둘</strong> <strong>것</strong><strong>!</strong></p><p id="4ee50861-4825-4333-bdba-338416095ca9" class="">If,  맨끝에 있는 철자 하나를 뽑아 쓰려 한다면 음수를 쓰는게 더 효율적.</p><p id="794ec933-c9a5-405a-b7a0-d28bde9dbd6e" class="">
-</p><blockquote id="29e6bc09-a197-409a-830c-c2c91f25ad87" class="">문제 69. 사원 테이블에서 이름을 출력하고 그 옆에 이름의 끝 철자를 출력해라. 이때 끝 철자를 소문자로 출력하시오.</blockquote><p id="0bd03009-11d1-426a-9bb7-ba93c832d203" class="">내 생각 : 맞음</p><pre id="3aa815eb-5c4a-4870-82af-50dda476ec23" class="code"><code>select ename, lower(substr(ename,-1))
-from emp;</code></pre><p id="344125ff-766f-4141-98b8-6fd4a6a45d49" class="">
-</p><h2 id="9c34317f-336d-49f7-89c6-dbb25b60dbf2" class=""><strong>019 문자에서 특정 철자의 위치 출력하기(INSTR)</strong></h2><p id="93d633ab-4534-40d9-9687-50054dd30e8c" class="">특정 철자의 자리수를 출력하는 함수</p><p id="a3e789a0-8c32-45b8-bdee-04acf8dec949" class="">e.g)</p><pre id="02361856-5d79-49a5-af66-2cf374a8cf29" class="code"><code>select instr(&#x27;smith&#x27;,&#x27;m&#x27;)
-from emp;</code></pre><p id="db478b8b-6149-46f5-a5f0-696888f708ee" class="">
-</p><p id="8753cc01-e7f8-44de-9d17-cb4ae8fce06c" class="">smith 에서 m 이 2번째에 있으니까 숫자 2가 나옴.</p><p id="95e44d61-a013-4899-9be8-5d7a48ddf0e7" class="">
-</p><blockquote id="1a289da2-2d64-47f3-8833-d05d12b48ce0" class="">e.g) 우리반 테이블에서 이메일을 출력하고 그 옆에 이메일에서 @ 가 몇번째 자리에 있는지 출력하시오.</blockquote><p id="baa98a47-41bd-46ed-93a1-65dbdcc22ab4" class="">내 생각 : 맞음.</p><pre id="f0f4d62c-757f-4d70-8065-e5a31a364dd9" class="code"><code>select email, instr(email,&#x27;@&#x27;)
-from emp12;</code></pre><p id="d52f5704-7677-4452-aa9f-563674d454f8" class="">
-</p><blockquote id="1bc5b6d2-b060-4c53-9346-dadcb3613d90" class="">i.e) 우리반 테이블에서 이메일에서 @ 앞에까지 의 철자를 잘라내시오.</blockquote><p id="39db515b-e6c5-4ec7-9de1-7f948184d831" class="">내 생각 (ename, email 은 맞는지 확인하기 위해 임의로 넣음)</p><pre id="5ff92908-21d2-41b9-b871-c27c81cc6fea" class="code"><code>select ename, email, substr(email,1,(instr(email,&#x27;@&#x27;)-1))
-from emp12;</code></pre><p id="96546da7-f4dd-4e07-b211-bf8951421fe4" class="">
-</p><p id="300c75b5-df55-4fcc-8bf2-9a58e670a13c" class="">오늘의 마지막 문제 (주말내내 풀어보기!)</p><blockquote id="766e893a-2e39-43db-b8c2-b704bb31a42a" class="">문제 70.  이메일을 출력하고 그 옆에 이메일의 도메인을 출력하시오.</blockquote><ul id="ab7e8102-2502-463f-846f-acfa5137989b" class="bulleted-list"><li>도메인 = @gmail.com -&gt; gmail 만 나오게 하는 것.</li></ul><p id="85667783-a057-4750-bcbf-46aea3a09c0f" class="">여태 까지 배운걸로 다 활용하면 풀 수 있음! (늦으면 1시간, 빠르면 10분)</p><p id="9f5e7270-2549-4acd-8214-d09ca41e63ae" class="">도메인만 출력 = 철자 따오기 substr (따올 컬럼, 시작점, 끝점)</p><p id="20cb8eff-ddf6-4897-b880-b167bd9a56df" class="">1트</p><p id="85e43ce5-cfc2-4cf2-ae18-c5ae98552e67" class="">substr(email,(instr(email,&#x27;@&#x27;))+1,-4))</p><p id="59174ddb-8c6c-404f-90f1-4842fa2855d6" class="">따올 컬럼 = 이메일</p><p id="cfdeceae-ef20-471d-9982-326629421ec6" class="">시작점 = 이메일 데이터중 @ 바로 뒤</p><p id="b569f6d6-067a-45d5-82eb-991d207bb680" class="">끝점 = @바로 뒤 부터  .com / .net 을 제외한 것 (뒤에서 4자리)</p><p id="65b70e69-9b95-4cec-b14b-a91139790c94" class="">2트</p><p id="f1fee51a-317a-4f85-b9e0-c20dac5e7be9" class="">select email, substr(email,(instr(email,&#x27;@&#x27;))+1, instr(email,&#x27;.&#x27;))</p><p id="a6c7b32c-53f9-4816-adfb-cef87cfa977d" class="">from emp12;</p><p id="36ee706d-0704-45dd-a010-097b32d3f44f" class="">이건 뒤에 .com 등이 사라지지 않음. 그나마 이게 제일 답에 가까운 상황.</p><p id="f478e431-115a-4269-9dd0-95f3faa678ab" class="">3트</p><p id="03ca92c8-c0e9-4719-9deb-837dc9a5a257" class="">select email, substr(email,(instr(email,&#x27;@&#x27;))+1,(instr(email, &#x27;.com&#x27; or &#x27;.net&#x27;)-1))</p><p id="85c4d928-f92e-47f8-aaf2-bc72d514b92a" class="">from emp12;</p><p id="988ae791-15c7-460f-94fe-0137a74d9c4a" class="">는 아닐까 했는데 or 등은 아님 실패!</p><p id="261033e8-5516-499a-a145-460aba256f77" class="">4트</p><p id="7ef04c29-1168-4c09-8fd1-d014c3281f37" class="">substr(email,시작할 철자위치출력(instr사용), 끝낼철자위치 출력(instr사용?)</p><p id="1aca40f5-5725-4440-bf56-621cc28e1062" class="">select email, substr(email,(instr(email,&#x27;@&#x27;))+1),</p><p id="a44bee60-8704-4342-a2d2-d91edff7212d" class="">끝낼 위치가 .com / .net 의 앞까지</p><p id="d262fb22-7821-429e-af9a-7a34f6ff4015" class="">맨뒤는</p><p id="24d507c9-efad-48cf-b354-90ebab6d9494" class="">@뒤에 있는 . 바로 1칸앞</p><p id="92a22555-a93a-4b58-b826-8b94c1140584" class="">맨뒤에서 4칸 앞 (-4)</p><p id="e8009b11-00d2-48f3-8406-2c8d68c35a59" class="">substr( 출력컬럼, 시작점, 출력시작점 기준으로 잘려나갈 글자의 인수 (위치))</p><p id="e1aa9723-7114-49cd-95fe-027e306af33b" class="">출력 컬럼 : email</p><p id="f5a5dd78-81a6-419e-9640-8390d62b00ca" class="">출력 시작점 :</p><p id="ffbc1b77-092e-498f-91ee-90c1fe87b3a3" class="">은 이메일 길이가 모두 다름 -&gt; 도메인만 출력해야 하니까 &#x27;@&#x27;바로 뒤가 시작 지점</p><ul id="f6a3f379-40f4-4b61-b7b1-d877fe9983df" class="bulleted-list"><li>&gt; instr 사용</li></ul><ul id="2e5a2ae8-ca87-4a92-8747-609e9d31f0d1" class="bulleted-list"><li>&gt; (instr(email,&#x27;@&#x27;))+1</li></ul><p id="96ea2421-5a0a-4c8c-b018-0779f84e49db" class="">끝나는 위치의 자리수 :</p><p id="17b1bbe6-ceca-4782-b3fa-2e4719780924" class="">는 각 데이터 마다 모두 다름 -&gt; 공통점은 ~.net / ~.com 으로 끝남.</p><p id="3a054284-0239-431a-b01e-3638b01790f1" class="">(생각중~!)</p><pre id="3f82fa62-ab46-4e1c-bd61-bad7f666e3b6" class="code"><code>nostelgia18@gmail.com         ||      gmail
-select email, substr(email,instr(email,&#x27;@&#x27;))+1),0)</code></pre><p id="2465bce0-b402-4e23-9a86-ba41d059a6ff" class="">
-</p><p id="7c24e12f-7206-4462-ae86-5611a082da7b" class="">시작점 설정은 코딩을 했는데, 끝점 설정을 ㅇㅓ떻게 할지 모르겠다….</p><p id="2e502495-551d-4759-b3d9-6764b0942a85" class=""><strong>이메일</strong> <strong>데이터에</strong> <strong>나오는</strong> <strong>문자들중</strong> <strong>맨끝에서</strong><strong> 4</strong><strong>번째까지</strong> <strong>를</strong> <strong>구현해야 함</strong><strong>!</strong></p><pre id="49349885-5ffd-4dbd-ab61-f96c9c865b73" class="code"><code>select ename, substr(email, instr(email, &#x27;@&#x27;)+1, instr(substr(email, instr(email, &#x27;@&#x27;)+1), &#x27;.&#x27;) -1)
-from emp11</code></pre><p id="f29dc3ad-7b1a-4bfc-b7c6-82e7e59d1617" class="">
-</p><p id="c8bd8ff1-22ab-4300-865d-688d3ae12da3" class="">정답!!!!</p><p id="26ae92ff-9f3a-4363-b838-8f4ed8f69d26" class="">특정문자를 출력해라 (이메일컬럼에서, @+1 된 지점부터 시작해서, 이메일 컬럼에서 @+1 부터 시작해 &#x27;.&#x27;의 -1지점까지의 위치까지를)</p><pre id="6d84a2ed-2684-4cd7-b7b4-3c720f3a9be3" class="code"><code>select ename, substr(email, instr(email,&#x27;@&#x27;)+1, instr(substr(email,instr(email,&#x27;@&#x27;)+1),&#x27;.&#x27;)-1)
-from emp12;</code></pre><p id="431f9cbd-a5c2-4013-a9e3-423ad1e71509" class="">
-</p><p id="9dcf68ee-1e13-4f52-91a4-be2ba545901a" class="">substr 로 이메일에서 철자 추출하라. 시작점은 이메일주소 컬럼의 @+1 부터이다.</p><p id="570e2b76-236a-4cff-9031-869e6693139e" class="">끝나는 점 (몇자리 냐면)</p><p id="bd0b1726-b629-4ce3-8c5c-c25169113e2e" class="">instr로 글자의 자리수를 출력하라. 어디냐면</p><p id="9a3ca7f7-952e-4324-8613-b07b07a19b41" class="">
-</p><h2 id="ea662eb0-88a4-40e6-9800-17db0bf1ef72" class=""><strong>020 특정</strong> <strong>철자를</strong> <strong>다른</strong> <strong>철자로</strong> <strong>변경하기(REPLACE)</strong></h2><p id="12b60381-b409-409f-a2cf-dd5e4395093b" class="">e.g)</p><pre id="5eeede76-f9fe-40d4-a16a-a20d1f9ae927" class="code"><code>select replace(&#x27;smith&#x27;,&#x27;m&#x27;,&#x27;k&#x27;)
-from dual;</code></pre><p id="f4d2cd69-118b-4092-a4e2-0cfd14c464d5" class="">
-</p><p id="a548d694-7bc0-45f1-af55-bd4ac0960436" class="">replace 문법</p><p id="09be5d9c-341e-405f-97c7-eb992df930f0" class="">replace (컬럼명, 대체 전 문자 or 숫자, 대체 후 문자 or 숫자)</p><p id="75443223-63cd-4293-a1f3-13d5fbd91ec2" class="">고객데이터를 보유한 기업들은 그 데이터를 모두 암호화를 해야할 의무가있음.</p><p id="a9de9ef3-29d9-449f-915e-632579322330" class="">
-</p><blockquote id="d9e00ed8-3857-464b-b378-632b3438a05b" class="">문제 71.  사원테이블에서 이름과 월급을 출력하는데, 월급을 출력할때 숫자 0을 별표(*) 로 출력하시오.</blockquote><p id="9029bb20-a605-4db4-bc47-ac379e3d5adc" class="">내 생각 (반만 맞음)</p><pre id="a9647f33-7089-40fd-95eb-5b1cd4b9cb26" class="code"><code>select ename, replace(sal,&#x27;0&#x27;,&#x27;*&#x27;)
-from emp;</code></pre><p id="45988d3f-7737-4f78-a297-cce2595c9a32" class="">
-</p><p id="8efced8f-8609-4cbc-b9a7-00157a6f6319" class="">여기서 &#x27;0&#x27; 은 사실 숫자여서 &#x27; &#x27; 을 쓸필요가 없음 (나의 실수)</p><p id="19325fb1-9dad-4778-92b3-1f4a413750da" class="">replace 쓴 후에 바꿀 것의 기준을 &#x27;컬럼&#x27;으로 잡았기 때문에 from emp를 쓰는게 맞음.</p><p id="04ab7115-53e8-4326-9c40-7a9f697d1e66" class="">
-</p><blockquote id="ede66bd2-f6df-4849-88d0-57d453d533d8" class="">문제 72. 우리반 테이블에서 이름을 출력하고, 그 옆에 이름의 두번째 철자를 출력하시오. </blockquote><p id="d6988ecd-cf47-4f14-9b74-a0cc6d36b0aa" class="">내 생각</p><pre id="d751d121-ba3e-4b17-814b-53258a77a8df" class="code"><code>select ename, substr(ename, 2, 1)
-from emp12;</code></pre><p id="0f15e615-01c2-46ea-985e-b11d1212c1cd" class="">
-</p><blockquote id="e8b900da-9ac3-4416-8479-47091f325d29" class="">문제 73. 아산 병원의 전광판을 구현하시오! (김승순 -&gt; 김*순) 으로 나오도록.</blockquote><p id="bb845482-338b-4310-8935-5209bc167930" class="">내 생각</p><pre id="cbbf05b2-1456-4ab0-9705-8745665de426" class="code"><code>select replace(ename,instr(ename,2,),&#x27;*&#x27;)
-from emp12;</code></pre><p id="ac96b3cb-646d-4554-9b42-78302877afb3" class="">
-</p><p id="14c5702e-c45b-4b82-9c30-7d6a4a7e3559" class="">이었는데 틀림</p><p id="e38fd4a7-2093-4dc1-afef-3c2f463a6206" class="">정답!</p><pre id="c0293e44-615e-4899-8fa3-0f08e32aad00" class="code"><code>select replace(ename,substr(ename,2,1),&#x27;*&#x27;)
-from emp12;</code></pre><p id="56f28f52-1820-4a26-99e9-899ae59a0b69" class="">
-</p><p id="87347421-0392-4d67-b6ac-dbadcc88c36a" class="">근데 이건 이름이 2~3글자인 경우에만 적용됨 4글자인 경우 다 티가 남.</p><p id="be1a5e79-793b-4548-948e-7c5321f0a1f7" class="">e.g) 28번 남*솔미 -&gt; 누가봐도 남궁솔미</p><p id="3c568e8a-a4e1-4ec9-ab05-856a6f1ca13c" class="">
-</p><blockquote id="6b508471-5094-471f-8004-55c260da6b95" class="">문제 74. 남궁솔미 데이터를 입력하고, 남궁*미로 출력되게 위의 SQL을 다시 작성하시오.</blockquote><p id="cabf0f7d-bc71-460f-b2ad-f403e9e212b5" class="">지금까지 배운걸로  할 수 없어 추후에 다시 할거임~!</p><pre id="0240376c-ec3c-4816-832a-941e19016db1" class="code"><code>alter table emp12
+```basic
+select upper(substr(ename,1,1)) || lower(substr(ename,2,@))
+from emp;
+```
+
+> @자리에 어떤 숫자를 써도 상관없음./ 넉넉하게 써도 되고, 안쓰면 그냥 자동으로 끝까지 읽음.
+
+substr( 첫번째 인자값, 두번째 인자값, 세번째 인자값)  / substr 은 '잘라내는 함수'
+
+-> substr(ename, 2, 2) = 김승순 중 승순 만 출력하라!
+
+김    승    순
+
+1     2     3
+
+-3    -2    -1
+
+두번째인자값 = 잘라날 시작 자리 수
+
+세번째인자값 = 시작자리수(두번째인자값)포함해서 잘라낼 철자의 개수
+
+substr 작성시 세번째 인자값에 아무것도 적지 않으면,
+
+e.g)
+
+```basic
+select substr('smith', 1, 3)
+from dual;
+```
+
+dual  은 select 절에 있는 함수의 값을 보기 위한 '가상(dummy)'의 테이블
+
+여기서 dual 대신 emp 쓰면 데이터의 건수만큼 똑같은 값이 나옴
+
+컬럼명을 쓰면 테이블명 (ename 등) 을 써야 하지만
+
+특정 '단어=문자'를 썼기 때문에 'dual' 을 쓴 것.
+
+테이블에서 자료 가져올때는 당연히 emp!
+
+**'dual' 은 공부** **할때** **아니면** **사실상** **거의** **쓸일** **없으니** **그냥** **알아만** **둘** **것!**
+
+If,  맨끝에 있는 철자 하나를 뽑아 쓰려 한다면 음수를 쓰는게 더 효율적.
+
+> 문제 69. 사원 테이블에서 이름을 출력하고 그 옆에 이름의 끝 철자를 출력해라. 이때 끝 철자를 소문자로 출력하시오.
+
+내 생각 : 맞음
+
+```basic
+select ename, lower(substr(ename,-1))
+from emp;
+```
+
+## **019 문자에서 특정 철자의 위치 출력하기(INSTR)**
+
+특정 철자의 자리수를 출력하는 함수
+
+e.g)
+
+```basic
+select instr('smith','m')
+from emp;
+```
+
+smith 에서 m 이 2번째에 있으니까 숫자 2가 나옴.
+
+> e.g) 우리반 테이블에서 이메일을 출력하고 그 옆에 이메일에서 @ 가 몇번째 자리에 있는지 출력하시오.
+
+내 생각 : 맞음.
+
+```basic
+select email, instr(email,'@')
+from emp12;
+```
+
+> i.e) 우리반 테이블에서 이메일에서 @ 앞에까지 의 철자를 잘라내시오.
+
+내 생각 (ename, email 은 맞는지 확인하기 위해 임의로 넣음)
+
+```basic
+select ename, email, substr(email,1,(instr(email,'@')-1))
+from emp12;
+```
+
+오늘의 마지막 문제 (주말내내 풀어보기!)
+
+> 문제 70.  이메일을 출력하고 그 옆에 이메일의 도메인을 출력하시오.
+
+- 도메인 = @gmail.com -> gmail 만 나오게 하는 것.
+
+여태 까지 배운걸로 다 활용하면 풀 수 있음! (늦으면 1시간, 빠르면 10분)
+
+도메인만 출력 = 철자 따오기 substr (따올 컬럼, 시작점, 끝점)
+
+1트
+
+substr(email,(instr(email,'@'))+1,-4))
+
+따올 컬럼 = 이메일
+
+시작점 = 이메일 데이터중 @ 바로 뒤
+
+끝점 = @바로 뒤 부터  .com / .net 을 제외한 것 (뒤에서 4자리)
+
+2트
+
+select email, substr(email,(instr(email,'@'))+1, instr(email,'.'))
+
+from emp12;
+
+이건 뒤에 .com 등이 사라지지 않음. 그나마 이게 제일 답에 가까운 상황.
+
+3트
+
+select email, substr(email,(instr(email,'@'))+1,(instr(email, '.com' or '.net')-1))
+
+from emp12;
+
+는 아닐까 했는데 or 등은 아님 실패!
+
+4트
+
+substr(email,시작할 철자위치출력(instr사용), 끝낼철자위치 출력(instr사용?)
+
+select email, substr(email,(instr(email,'@'))+1),
+
+끝낼 위치가 .com / .net 의 앞까지
+
+맨뒤는
+
+@뒤에 있는 . 바로 1칸앞
+
+맨뒤에서 4칸 앞 (-4)
+
+substr( 출력컬럼, 시작점, 출력시작점 기준으로 잘려나갈 글자의 인수 (위치))
+
+출력 컬럼 : email
+
+출력 시작점 :
+
+은 이메일 길이가 모두 다름 -> 도메인만 출력해야 하니까 '@'바로 뒤가 시작 지점
+
+- > instr 사용
+- > (instr(email,'@'))+1
+
+끝나는 위치의 자리수 :
+
+는 각 데이터 마다 모두 다름 -> 공통점은 ~.net / ~.com 으로 끝남.
+
+(생각중~!)
+
+```basic
+nostelgia18@gmail.com         ||      gmail
+select email, substr(email,instr(email,'@'))+1),0)
+```
+
+시작점 설정은 코딩을 했는데, 끝점 설정을 ㅇㅓ떻게 할지 모르겠다….
+
+**이메일** **데이터에** **나오는** **문자들중** **맨끝에서 4번째까지** **를** **구현해야 함!**
+
+```basic
+select ename, substr(email, instr(email, '@')+1, instr(substr(email, instr(email, '@')+1), '.') -1)
+from emp11
+```
+
+정답!!!!
+
+특정문자를 출력해라 (이메일컬럼에서, @+1 된 지점부터 시작해서, 이메일 컬럼에서 @+1 부터 시작해 '.'의 -1지점까지의 위치까지를)
+
+```basic
+select ename, substr(email, instr(email,'@')+1, instr(substr(email,instr(email,'@')+1),'.')-1)
+from emp12;
+```
+
+substr 로 이메일에서 철자 추출하라. 시작점은 이메일주소 컬럼의 @+1 부터이다.
+
+끝나는 점 (몇자리 냐면)
+
+instr로 글자의 자리수를 출력하라. 어디냐면
+
+## **020 특정** **철자를** **다른** **철자로** **변경하기(REPLACE)**
+
+e.g)
+
+```basic
+select replace('smith','m','k')
+from dual;
+```
+
+replace 문법
+
+replace (컬럼명, 대체 전 문자 or 숫자, 대체 후 문자 or 숫자)
+
+고객데이터를 보유한 기업들은 그 데이터를 모두 암호화를 해야할 의무가있음.
+
+> 문제 71.  사원테이블에서 이름과 월급을 출력하는데, 월급을 출력할때 숫자 0을 별표(*) 로 출력하시오.
+
+내 생각 (반만 맞음)
+
+```basic
+select ename, replace(sal,'0','*')
+from emp;
+```
+
+여기서 '0' 은 사실 숫자여서 ' ' 을 쓸필요가 없음 (나의 실수)
+
+replace 쓴 후에 바꿀 것의 기준을 '컬럼'으로 잡았기 때문에 from emp를 쓰는게 맞음.
+
+> 문제 72. 우리반 테이블에서 이름을 출력하고, 그 옆에 이름의 두번째 철자를 출력하시오.
+
+내 생각
+
+```basic
+select ename, substr(ename, 2, 1)
+from emp12;
+```
+
+> 문제 73. 아산 병원의 전광판을 구현하시오! (김승순 -> 김*순) 으로 나오도록.
+
+내 생각
+
+```basic
+select replace(ename,instr(ename,2,),'*')
+from emp12;
+```
+
+이었는데 틀림
+
+정답!
+
+```basic
+select replace(ename,substr(ename,2,1),'*')
+from emp12;
+```
+
+근데 이건 이름이 2~3글자인 경우에만 적용됨 4글자인 경우 다 티가 남.
+
+e.g) 28번 남*솔미 -> 누가봐도 남궁솔미
+
+> 문제 74. 남궁솔미 데이터를 입력하고, 남궁*미로 출력되게 위의 SQL을 다시 작성하시오.
+
+지금까지 배운걸로  할 수 없어 추후에 다시 할거임~!
+
+```basic
+alter table emp12
 modify ename varchar2(30);
 
 insert into emp12(ename,age)
 
-values(&#x27;남궁솔미&#x27;,27);
+values('남궁솔미',27);
 
-commit;</code></pre><p id="3d070f52-c0be-4756-9fd6-0fcde083cbcd" class="">
-</p><p id="de674345-2cf1-48f5-ba5c-b95d2789763c" class="">select * from emp12;</p><p id="e6bed92b-9261-4999-9680-b206fe46904d" class="">입력하여 테이블에 데이터 추가한 뒤 문제 풀기!</p><p id="58a7d3b1-1928-40e2-867b-b162f6a36a4d" class="">내 생각</p><pre id="231cc9cd-0c0c-4c4a-b6f0-c93f62c2b433" class="code"><code>select replace(ename,substr(ename,3,1),&#x27;*&#x27;)
-from emp12;</code></pre><p id="1f73032c-cd32-44e1-82cf-c4fedfb81daf" class="">
-</p><p id="da21964b-f452-4303-8102-4f60530a3bc9" class="">이었는데 이건 이름이 2글자인 사람은 변경이 안됨…...</p><p id="bd23c1c1-914b-4328-a745-bb476fcee056" class="">마이너스를 이용할 것!</p><p id="7edc547b-650b-446b-af1b-7cb5f272ae69" class="">만약 2글자가 없다면</p><pre id="bf80cb34-1d51-46a7-a695-b1fc284e1247" class="code"><code>select replace(ename,substr(ename,-2,1),&#x27;*&#x27;)
-from emp12;</code></pre><p id="f6aaf62d-4074-42de-9127-494649d94e98" class="">
-</p><p id="6b7dbd8f-6074-42d6-92a8-cbe2948b2f23" class="">라고 하면 됨.</p></div></article></body></html>
+commit;
+```
+
+select * from emp12;
+
+입력하여 테이블에 데이터 추가한 뒤 문제 풀기!
+
+내 생각
+
+```basic
+select replace(ename,substr(ename,3,1),'*')
+from emp12;
+```
+
+이었는데 이건 이름이 2글자인 사람은 변경이 안됨…...
+
+마이너스를 이용할 것!
+
+만약 2글자가 없다면
+
+```basic
+select replace(ename,substr(ename,-2,1),'*')
+from emp12;
+```
+
+라고 하면 됨.
