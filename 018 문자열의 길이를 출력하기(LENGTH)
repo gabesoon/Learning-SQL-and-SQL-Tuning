@@ -1,0 +1,109 @@
+## 018 문자열의 길이를 출력하기(LENGTH)
+
+철자의 길이를 출력하는 함수
+
+```sql
+select ename, length(ename)
+	from emp;
+```
+
+문제 65. 우리반 테이블에서 이메일과 이메일 철자의 길이를 출력하는데, 이메일 철자의 길이가 긴 것부터 출력되도록 하시오.
+
+내 생각 : 맞음
+
+```sql
+selecdt email, length(email)
+	from emp12
+	order by length(email) desc;
+```
+
+응용 해보고 싶어진 것
+
+1. 이메일 글자순으로 나열하고, 이름을 가나다 순으로 나열하는 법은?
+
+```sql
+select ename, length(email)
+	from emp12
+	order by length(email) desc, ename desc;
+```
+
+다른 조건 명령어들은 and 나 not 등을 붙여서 처음엔
+
+order by length(email) desc and ename desc; 요렇게 했는데 오류!
+
+order by 는 전치사 없이 조건 추가할때 콤마로 구분만 하면 됨!
+
+문제 66. EMP 테이블에서 ename 을 출력하고 그 옆에 ename 의 첫번째 철자를 출력하시오.
+
+내 생각
+
+```sql
+select ename, substr(ename,1,1)
+	from emp;
+```
+
+문제 67. 위의 결과를 다시 출력하는데 이름의 첫번째 철자로 출력되는 부분은 소문자로 출력하시오.
+
+내 생각 : 맞음
+
+```sql
+select ename, lower(substr(ename,1,1))
+	from emp;
+
+or
+
+select ename, substr(lower(ename),1,1)
+	from emp; 
+```
+
+도출하려는 값중 대/소 문자 등으로 변경하고 싶은 것은 맨 앞에 와야 하는 구나!
+
+문제 68. (오늘의 마지막 문제) 답글로 검사 받으세요~!
+
+아래의 결과를 initcap 쓰지 말고, upper, lower, substr, || (연결연산자) 사용해서 출력하시오!
+
+```sql
+select initcap(ename)
+	from emp;
+
+-> 첫글자만 대문자, 나머지는 소문자로 나옴
+```
+
+내 생각
+
+```sql
+1)
+select upper(ename,1,1)||lower(substr(ename,2))
+	from emp;
+
+or 
+2)
+select upper(ename,1,1)||substr(lower(ename),2,length(ename)-1)
+	from emp;
+```
+
+1)
+
+→ 선택해라 대문자로 이름의 첫번째 글자 기준으로 1글자 || (연결연산) 소문자로 이름의 2번째 글자부터 전부!
+
+emp 테이블로 부터
+
+substr 을 쓸때 데이터를 고를 컬럼을 선택하고 콤마/숫자/괄호(끝날 순번 지정하지 않음) 하면 해당 숫자부터 끝까지 별도의 지정 없이 다 선택이 되는 것이구나!
+
+꼭 substr(컬럼, 숫자,숫자) 이런 식으로 입력할 필요 없구나!
+
+2) length 함수도 쓰면서 맨 뒷자리는 몇글자가 되든 -1인 것을 응용함! 
+
+응용문제 만들어 보자.
+
+68번의 결과 + job 을 출력하는데 initcap 쓰지 말고, upper, lower, substr, || (연결연산자) 사용해서 출력하시오!
+
+```sql
+select initcap(ename), initcap(job)
+	from emp;
+```
+
+```sql
+select upper(ename,1,1)||lower(substr(ename,2)), upper(job,1,1)||lower(substr(job,2))
+	from emp;
+```
