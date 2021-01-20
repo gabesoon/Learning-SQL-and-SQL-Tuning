@@ -1,0 +1,120 @@
+## **019 문자에서 특정 철자의 위치 출력하기(INSTR)**
+
+특정 철자의 자리수를 출력하는 함수
+
+e.g)
+
+```basic
+select instr('smith','m')
+from emp;
+```
+
+smith 에서 m 이 2번째에 있으니까 숫자 2가 나옴.
+
+> e.g) 우리반 테이블에서 이메일을 출력하고 그 옆에 이메일에서 @ 가 몇번째 자리에 있는지 출력하시오.
+
+내 생각 : 맞음.
+
+```basic
+select email, instr(email,'@')
+from emp12;
+```
+
+> i.e) 우리반 테이블에서 이메일에서 @ 앞에까지 의 철자를 잘라내시오.
+
+내 생각 (ename, email 은 맞는지 확인하기 위해 임의로 넣음)
+
+```basic
+select ename, email, substr(email,1,(instr(email,'@')-1))
+from emp12;
+```
+
+오늘의 마지막 문제 (주말내내 풀어보기!)
+
+> 문제 70.  이메일을 출력하고 그 옆에 이메일의 도메인을 출력하시오.
+
+- 도메인 = @gmail.com -> gmail 만 나오게 하는 것.
+
+여태 까지 배운걸로 다 활용하면 풀 수 있음! (늦으면 1시간, 빠르면 10분)
+
+도메인만 출력 = 철자 따오기 substr (따올 컬럼, 시작점, 끝점)
+
+1트
+
+substr(email,(instr(email,'@'))+1,-4))
+
+따올 컬럼 = 이메일
+
+시작점 = 이메일 데이터중 @ 바로 뒤
+
+끝점 = @바로 뒤 부터  .com / .net 을 제외한 것 (뒤에서 4자리)
+
+2트
+
+select email, substr(email,(instr(email,'@'))+1, instr(email,'.'))
+
+from emp12;
+
+이건 뒤에 .com 등이 사라지지 않음. 그나마 이게 제일 답에 가까운 상황.
+
+3트
+
+select email, substr(email,(instr(email,'@'))+1,(instr(email, '.com' or '.net')-1))
+
+from emp12;
+
+는 아닐까 했는데 or 등은 아님 실패!
+
+4트
+
+substr(email,시작할 철자위치출력(instr사용), 끝낼철자위치 출력(instr사용?)
+
+select email, substr(email,(instr(email,'@'))+1),
+
+끝낼 위치가 .com / .net 의 앞까지
+
+맨뒤는
+
+@뒤에 있는 . 바로 1칸앞
+
+맨뒤에서 4칸 앞 (-4)
+
+substr( 출력컬럼, 시작점, 출력시작점 기준으로 잘려나갈 글자의 인수 (위치))
+
+출력 컬럼 : email
+
+출력 시작점 :
+
+은 이메일 길이가 모두 다름 -> 도메인만 출력해야 하니까 '@'바로 뒤가 시작 지점
+
+- > instr 사용
+- > (instr(email,'@'))+1
+
+끝나는 위치의 자리수 :
+
+는 각 데이터 마다 모두 다름 -> 공통점은 ~.net / ~.com 으로 끝남.
+
+(생각중~!)
+
+```basic
+nostelgia18@gmail.com         ||      gmail
+select email, substr(email,instr(email,'@'))+1),0)
+```
+
+시작점 설정은 코딩을 했는데, 끝점 설정을 ㅇㅓ떻게 할지 모르겠다….
+
+**이메일** **데이터에** **나오는** **문자들중** **맨끝에서 4번째까지** **를** **구현해야 함!**
+
+```basic
+select ename, substr(email, instr(email, '@')+1, instr(substr(email, instr(email, '@')+1), '.') -1)
+from emp11
+```
+
+정답!!!!
+
+특정문자를 출력해라 (이메일컬럼에서, @+1 된 지점부터 시작해서, 이메일 컬럼에서 @+1 부터 시작해 '.'의 -1지점까지의 위치까지를)
+
+```basic
+select ename, substr(email, instr(email,'@')+1, instr(substr(email,instr(email,'@')+1),'.')-1)
+from emp12;
+```
