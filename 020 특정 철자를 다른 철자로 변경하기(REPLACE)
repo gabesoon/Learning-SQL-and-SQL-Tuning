@@ -1,0 +1,96 @@
+## **020 특정** **철자를** **다른** **철자로** **변경하기(REPLACE)**
+
+문법 : 
+`replace (컬럼명, 대체전 문자/숫자  or 숫자, 대체할 문자/숫자)`
+
+e.g)
+
+```basic
+select replace('smith','m','k')
+from dual;
+```
+
+고객데이터를 보유한 기업들은 그 데이터를 모두 암호화를 해야할 의무가있음.
+
+> 문제 71.  사원테이블에서 이름과 월급을 출력하는데, 월급을 출력할때 숫자 0을 별표(*) 로 출력하시오.
+
+내 생각 (반만 맞음)
+
+```basic
+select ename, replace(sal,'0','*')
+from emp;
+```
+
+여기서 '0' 은 사실 숫자여서 ' ' 을 쓸필요가 없음 (나의 실수)
+
+replace 쓴 후에 바꿀 것의 기준을 '컬럼'으로 잡았기 때문에 from emp를 쓰는게 맞음.
+
+> 문제 72. 우리반 테이블에서 이름을 출력하고, 그 옆에 이름의 두번째 철자를 출력하시오.
+
+내 생각
+
+```basic
+select ename, substr(ename, 2, 1)
+from emp12;
+```
+
+> 문제 73. 아산 병원의 전광판을 구현하시오! (김승순 -> 김*순) 으로 나오도록.
+
+내 생각
+
+```basic
+select replace(ename,instr(ename,2,),'*')
+from emp12;
+```
+
+이었는데 틀림
+
+정답!
+
+```basic
+select replace(ename,substr(ename,2,1),'*')
+from emp12;
+```
+
+근데 이건 이름이 2~3글자인 경우에만 적용됨 4글자인 경우 다 티가 남.
+
+e.g) 28번 남*솔미 -> 누가봐도 남궁솔미
+
+> 문제 74. 남궁솔미 데이터를 입력하고, 남궁*미로 출력되게 위의 SQL을 다시 작성하시오.
+
+지금까지 배운걸로  할 수 없어 추후에 다시 할거임~!
+
+```basic
+alter table emp12
+modify ename varchar2(30);
+
+insert into emp12(ename,age)
+
+values('남궁솔미',27);
+
+commit;
+```
+
+select * from emp12;
+
+입력하여 테이블에 데이터 추가한 뒤 문제 풀기!
+
+내 생각
+
+```basic
+select replace(ename,substr(ename,3,1),'*')
+from emp12;
+```
+
+이었는데 이건 이름이 2글자인 사람은 변경이 안됨…...
+
+마이너스를 이용할 것!
+
+만약 2글자가 없다면
+
+```basic
+select replace(ename,substr(ename,-2,1),'*')
+from emp12;
+```
+
+라고 하면 됨.
